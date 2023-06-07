@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Ксения Ярцева](https://up.htmlacademy.ru/javascript/29/user/1938675).
-* Наставник: `Arthur Litovko`.
+* Наставник: [Arthur Litovko](https://github.com/baileys-li).
 
 ---
 
