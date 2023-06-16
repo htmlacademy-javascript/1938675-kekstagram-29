@@ -24,7 +24,7 @@ const getNumberFromString = (string) => {
 
   for(let i = 0 ; i < string.length ; i++) {
     const characterIsNan = Number.isNaN(parseInt(string[i],10));
-    number = characterIsNan === true ? number : number + string[i];
+    number = characterIsNan ? number : number + string[i];
   }
 
   return parseInt(number,10);
