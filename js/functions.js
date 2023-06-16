@@ -23,11 +23,11 @@ const getNumberFromString = (string) => {
   let number = '';
 
   for(let i = 0 ; i < string.length ; i++) {
-    const NumberIsNan = Number.isNaN(parseInt(string[i],10));
-    number = NumberIsNan === true ? number : number + string[i];
+    const characterIsNan = Number.isNaN(parseInt(string[i],10));
+    number = characterIsNan === true ? number : number + string[i];
   }
 
-  return Number(parseInt(number,10));
+  return parseInt(number,10);
 };
 
 getNumberFromString('2023 год');
