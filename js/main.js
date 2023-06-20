@@ -1,4 +1,5 @@
-const OBJECT_PHOTO_COUNT = 25; // кол-во объектов фото
+/** кол-во объектов фото */
+const OBJECT_PHOTO_COUNT = 25;
 
 const PHOTO_DESCRIPTIONS = [
   'Мистический закат над горизонтом, окрашенный в огненные оттенки.',
@@ -26,7 +27,7 @@ const AUTHOR_NAMES = [
   'Васька'
 ];
 
-// Функция для получения рандомного целого цисла из диапазона
+/** Функция для получения рандомного целого цисла из диапазона */
 function getRandomInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -35,10 +36,10 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-// Функция получения рандомного объекта из массива
+/** Функция получения рандомного объекта из массива */
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-// Функция для создания объекта—комментария
+/** Функция для создания объекта—комментария */
 const createComments = () => ({
   id: Math.floor(Math.random() * 100),
   avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
@@ -46,7 +47,7 @@ const createComments = () => ({
   name: getRandomArrayElement(AUTHOR_NAMES)
 });
 
-// Функция для генерации рандомного неповторяющегося целого цисла
+/** Функция для генерации рандомного неповторяющегося целого цисла */
 const createRandomIdFromRangeGenerator = (min, max) => {
   const previousValues = [];
   return function () {
@@ -63,12 +64,12 @@ const createRandomIdFromRangeGenerator = (min, max) => {
   };
 };
 
-// Генераторы случайных неповторяющихся чисел из заданного диапазона для id/url и количества комментариев
-const generatePhotoId = createRandomIdFromRangeGenerator(1,25);
-const generatePhotoUrlNumber = createRandomIdFromRangeGenerator(1,25);
+/** Генераторы случайных неповторяющихся чисел из заданного диапазона для id/url и количества комментариев */
+const generatePhotoId = createRandomIdFromRangeGenerator(1,OBJECT_PHOTO_COUNT);
+const generatePhotoUrlNumber = createRandomIdFromRangeGenerator(1,OBJECT_PHOTO_COUNT);
 const generateCommentsCount = createRandomIdFromRangeGenerator(0,30);
 
-// Функция создания одного объекта-фото
+/** Функция создания одного объекта-фото */
 const createPhotoInfo = () => ({
   id: generatePhotoId(),
   url: `photos/${generatePhotoUrlNumber()}.jpg`,
@@ -77,7 +78,7 @@ const createPhotoInfo = () => ({
   comments: Array.from({length: generateCommentsCount()}, createComments)
 });
 
-// Массив из 25 объектов-фото
+/** Массив из 25 объектов-фото */
 const photoArray = () => Array.from({length: OBJECT_PHOTO_COUNT}, createPhotoInfo);
 
 photoArray();
