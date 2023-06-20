@@ -53,7 +53,6 @@ const createRandomIdFromRangeGenerator = (min, max) => {
     let currentValue = getRandomInteger(min, max);
     previousValues.includes(currentValue);
     if (previousValues.length >= (max - min + 1)) {
-      console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -66,16 +65,19 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 
 // Генераторы случайных неповторяющихся чисел из заданного диапазона для id/url и количества комментариев
 const generatePhotoId = createRandomIdFromRangeGenerator(1,25);
+const generatePhotoUrlNumber = createRandomIdFromRangeGenerator(1,25);
 const generateCommentsCount = createRandomIdFromRangeGenerator(0,30);
 
 // Функция создания одного объекта-фото
 const createPhotoInfo = () => ({
   id: generatePhotoId(),
-  url: `photos/${generatePhotoId()}.jpg`,
+  url: `photos/${generatePhotoUrlNumber()}.jpg`,
   description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
   likes: getRandomInteger(15,200),
   comments: Array.from({length: generateCommentsCount()}, createComments)
 });
 
 // Массив из 25 объектов-фото
-const photoArray = Array.from({length: OBJECT_PHOTO_COUNT}, createPhotoInfo);
+const photoArray = () => Array.from({length: OBJECT_PHOTO_COUNT}, createPhotoInfo);
+
+photoArray();
