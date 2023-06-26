@@ -32,17 +32,22 @@ const getNumberFromString = (string) => {
 
 getNumberFromString('2023 год');
 
-/**возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.*/
+/**Переводит сроку со временем в количество минут.*/
+const getMinutesNumberFromTimeString = (time) => {
+  const SplitToHoursAndMinutes = time.split(':');
+  const numberOfMinutes = Number(SplitToHoursAndMinutes[0]) * 60 + Number(SplitToHoursAndMinutes[1]);
+  return numberOfMinutes;
+};
 
-const isMeetingPartOfWorkday = (startOfWorkday, endOfWorkday, startOfMeeting, durationOfMeeting) => {
-  //Перевести строковые данные в минуты = разделить строку методом split по двоеточию => первый эл-т массива*60+второй эл-т массива
-  const startOfWorkdaySplitToHoursAndMinutes = startOfWorkday.split(':'); //надо перевести в функцию и вызвать для каждого аргумента
-  const startOfWorkdayMinutes = Number(startOfWorkdaySplitToHoursAndMinutes[0])*60 + Number(startOfWorkdaySplitToHoursAndMinutes[1]);
-  //Проверить, что начало встречи не раньше начала рабочего дня и (начало встречи + длина встречи) не больше конца рабочего дня
-}
+/**Проверяет, выходит или нет встреча за рамки трудового дня.*/
+const checkMeetingPartOfWorkday = (startOfWorkday, endOfWorkday, startOfMeeting, durationOfMeeting) => {
+  const startOfWorkdayToMinutes = getMinutesNumberFromTimeString(startOfWorkday);
+  const endOfWorkdayToMinutes = getMinutesNumberFromTimeString(endOfWorkday);
+  const startOfMeetingToMinutes = getMinutesNumberFromTimeString(startOfMeeting);
 
-console.log("Ожидаю true, а получаю - " + isMeetingPartOfWorkday('08:00', '17:30', '14:00', 90));
-console.log("Ожидаю true, а получаю - " + isMeetingPartOfWorkday('8:0', '10:0', '8:0', 120));
-console.log("Ожидаю false, а получаю - " + isMeetingPartOfWorkday('08:00', '14:30', '14:00', 90));
-console.log("Ожидаю false, а получаю - " + isMeetingPartOfWorkday('14:00', '17:30', '08:0', 90));
-console.log("Ожидаю false, а получаю - " + isMeetingPartOfWorkday('8:00', '17:30', '08:00', 900));
+  const isMeetingPartOfWorkday = !!(startOfMeetingToMinutes >= startOfWorkdayToMinutes && (startOfMeetingToMinutes + durationOfMeeting) <= endOfWorkdayToMinutes);
+
+  return isMeetingPartOfWorkday;
+};
+
+checkMeetingPartOfWorkday();
