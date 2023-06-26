@@ -51,7 +51,7 @@ const createPhotoInfo = () => ({
   comments: Array.from({length: generateCommentsCount()}, createComments)
 });
 
-/** Массив из 25 объектов-фото */
-const photoArray = () => Array.from({length: OBJECT_PHOTO_COUNT}, createPhotoInfo);
+/**Создаёт массив из 25 объектов-фото */
+const getMockedPhotos = () => Array.from({length: OBJECT_PHOTO_COUNT}, createPhotoInfo);
 
-export {photoArray};
+export {getMockedPhotos};
