@@ -32,10 +32,11 @@ const getNumberFromString = (string) => {
 
 getNumberFromString('2023 год');
 
+const MINUTES_IN_HOUR = 60;
 /**Переводит сроку со временем в количество минут.*/
 const getMinutesNumberFromTimeString = (time) => {
-  const SplitToHoursAndMinutes = time.split(':');
-  const numberOfMinutes = Number(SplitToHoursAndMinutes[0]) * 60 + Number(SplitToHoursAndMinutes[1]);
+  const [hours, minutes] = time.split(':').map(Number);
+  const numberOfMinutes = hours * MINUTES_IN_HOUR + minutes;
   return numberOfMinutes;
 };
 
@@ -45,9 +46,11 @@ const checkMeetingPartOfWorkday = (startOfWorkday, endOfWorkday, startOfMeeting,
   const endOfWorkdayToMinutes = getMinutesNumberFromTimeString(endOfWorkday);
   const startOfMeetingToMinutes = getMinutesNumberFromTimeString(startOfMeeting);
 
-  const isMeetingPartOfWorkday = !!(startOfMeetingToMinutes >= startOfWorkdayToMinutes && (startOfMeetingToMinutes + durationOfMeeting) <= endOfWorkdayToMinutes);
+  const startInWorkday = startOfMeetingToMinutes >= startOfWorkdayToMinutes;
+  const endInWorkday = (startOfMeetingToMinutes + durationOfMeeting) <= endOfWorkdayToMinutes;
+  const isMeetingPartOfWorkday = startInWorkday && endInWorkday;
 
   return isMeetingPartOfWorkday;
 };
 
-checkMeetingPartOfWorkday();
+checkMeetingPartOfWorkday('8:00','14:00','12:10',30);
