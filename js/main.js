@@ -1,3 +1,3 @@
-import {photoArray} from './data.js';
+import {getMockedPhotos} from './data.js';
 
-photoArray();
+getMockedPhotos();

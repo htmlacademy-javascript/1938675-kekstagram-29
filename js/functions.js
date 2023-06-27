@@ -31,3 +31,26 @@ const getNumberFromString = (string) => {
 };
 
 getNumberFromString('2023 год');
+
+const MINUTES_IN_HOUR = 60;
+/**Переводит сроку со временем в количество минут.*/
+const getMinutesNumberFromTimeString = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const numberOfMinutes = hours * MINUTES_IN_HOUR + minutes;
+  return numberOfMinutes;
+};
+
+/**Проверяет, выходит или нет встреча за рамки трудового дня.*/
+const checkMeetingPartOfWorkday = (startOfWorkday, endOfWorkday, startOfMeeting, durationOfMeeting) => {
+  const startOfWorkdayToMinutes = getMinutesNumberFromTimeString(startOfWorkday);
+  const endOfWorkdayToMinutes = getMinutesNumberFromTimeString(endOfWorkday);
+  const startOfMeetingToMinutes = getMinutesNumberFromTimeString(startOfMeeting);
+
+  const startInWorkday = startOfMeetingToMinutes >= startOfWorkdayToMinutes;
+  const endInWorkday = (startOfMeetingToMinutes + durationOfMeeting) <= endOfWorkdayToMinutes;
+  const isMeetingPartOfWorkday = startInWorkday && endInWorkday;
+
+  return isMeetingPartOfWorkday;
+};
+
+checkMeetingPartOfWorkday('8:00','14:00','12:10',30);
