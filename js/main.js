@@ -1,3 +1,1 @@
-import {getMockedPhotos} from './data.js';
-
-getMockedPhotos();
+import './pictures.js';
