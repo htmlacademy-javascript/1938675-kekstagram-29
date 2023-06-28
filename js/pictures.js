@@ -1,7 +1,7 @@
 import {getMockedPhotos} from './data.js';
 
-const pictureList = document.querySelector('.pictures');//нашла элемент, в который надо вставить фото
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');//нашла шаблон для фото
+const pictureList = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const pictures = getMockedPhotos();
 
