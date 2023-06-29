@@ -9,11 +9,13 @@ const pictureListFragment = document.createDocumentFragment();
 
 pictures.forEach(({description, comments, likes, url}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').alt = description;
+  const imageElement = pictureElement.querySelector('.picture__img');
+  imageElement.src = url;
+  imageElement.alt = description;
+
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureList.appendChild(pictureElement);
+  pictureListFragment.appendChild(pictureElement);
 });
 
 pictureList.appendChild(pictureListFragment);
