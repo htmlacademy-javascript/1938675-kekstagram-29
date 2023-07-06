@@ -8,6 +8,17 @@ const pictures = getMockedPhotos();
 
 const pictureListFragment = document.createDocumentFragment();
 
+const onPictureClick = (evt) => {
+  evt.preventDefault();
+  const link = evt.currentTarget;
+  const id = link.dataset.id;
+  const foundPhoto = pictures.find((picture) => picture.id === id);
+
+  if(foundPhoto) {
+    return openBigPicture(foundPhoto);
+  }
+};
+
 pictures.forEach(({description, comments, likes, url}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   const imageElement = pictureElement.querySelector('.picture__img');
@@ -25,3 +36,5 @@ pictures.forEach(({description, comments, likes, url}) => {
 });
 
 pictureList.appendChild(pictureListFragment);
+
+export {onPictureClick};
