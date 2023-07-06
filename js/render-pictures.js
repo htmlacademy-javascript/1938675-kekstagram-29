@@ -29,6 +29,10 @@ pictures.forEach(({description, comments, likes, url}) => {
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureListFragment.appendChild(pictureElement);
 
+  pictureElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openBigPicture();
+  });
 });
 
 pictureList.appendChild(pictureListFragment);
