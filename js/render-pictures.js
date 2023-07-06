@@ -1,4 +1,5 @@
 import {getMockedPhotos} from './data.js';
+import {openBigPicture} from './full-photo.js';
 
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -16,6 +17,11 @@ pictures.forEach(({description, comments, likes, url}) => {
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureListFragment.appendChild(pictureElement);
+
+  pictureElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openBigPicture();
+  });
 });
 
 pictureList.appendChild(pictureListFragment);
