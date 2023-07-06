@@ -10,16 +10,16 @@ const likesCountElement = document.querySelector('.likes-count');
 const commentsCountElement = document.querySelector('.comments-count');
 const pictureDescriptionElement = document.querySelector('.social__caption');
 
-const openBigPicture = ({url, description, likes, comments}) => {
+const openBigPicture = (/*{url, description, likes, comments}*/) => {
   pictureWrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
-  pictureImgElement.src = url;
-  commentsCountElement.textContent = comments;
-  likesCountElement.textContent = likes;
-  pictureDescriptionElement.alt = description;
+  //pictureImgElement.src = url;
+  //commentsCountElement.textContent = comments;
+  //likesCountElement.textContent = likes;
+  //pictureDescriptionElement.alt = description;
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {

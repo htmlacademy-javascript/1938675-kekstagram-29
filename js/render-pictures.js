@@ -19,11 +19,14 @@ const onPictureClick = (evt) => {
   }
 };
 
-pictures.forEach(({description, comments, likes, url}) => {
+const renderPicture = (({id, description, comments, likes, url}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   const imageElement = pictureElement.querySelector('.picture__img');
   imageElement.src = url;
   imageElement.alt = description;
+
+  pictureElement.dataset.id = id;
+  pictureElement.addEventListener('click', onPictureClick);
 
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
@@ -35,6 +38,7 @@ pictures.forEach(({description, comments, likes, url}) => {
   });
 });
 
+pictures.forEach(renderPicture);
 pictureList.appendChild(pictureListFragment);
 
 export {onPictureClick};
