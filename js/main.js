@@ -1,1 +1,2 @@
-import './pictures.js';
+import './render-pictures.js';
+import './full-photo.js';
