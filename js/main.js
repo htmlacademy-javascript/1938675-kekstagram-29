@@ -1,3 +1,3 @@
 import {renderPicture} from './thumbnails.js';
 
-renderPicture()
+renderPicture();
