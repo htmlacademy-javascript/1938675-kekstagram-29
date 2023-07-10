@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 
+const COMMENTS_PACK_AMOUNT = 5;
+
 const pictureWrapper = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
 const socialCommentCount = document.querySelector('.social__comment-count');
@@ -52,7 +54,7 @@ const openBigPicture = ({url, description, likes, comments}) => {
   likesCountElement.textContent = likes;
   pictureDescriptionElement.alt = description;
 
-  renderComments(comments);
+  renderComments(comments.slice(0, COMMENTS_PACK_AMOUNT));
 
   document.addEventListener('keydown', onDocumentKeydown);
 };
