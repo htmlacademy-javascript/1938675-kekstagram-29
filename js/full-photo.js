@@ -46,8 +46,6 @@ const onDocumentKeydown = (evt) => {
 const openBigPicture = ({url, description, likes, comments}) => {
   pictureWrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
 
   pictureImgElement.src = url;
   commentsCountElement.textContent = comments;
