@@ -48,7 +48,7 @@ const openBigPicture = ({url, description, likes, comments}) => {
   document.body.classList.add('modal-open');
 
   pictureImgElement.src = url;
-  commentsCountElement.textContent = comments;
+  commentsCountElement.textContent = comments.length;
   likesCountElement.textContent = likes;
   pictureDescriptionElement.alt = description;
 
