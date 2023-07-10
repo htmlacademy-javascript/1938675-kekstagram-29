@@ -1,2 +1,3 @@
-import './render-pictures.js';
-import './full-photo.js';
+import {renderPicture} from './thumbnails.js';
+
+renderPicture()
