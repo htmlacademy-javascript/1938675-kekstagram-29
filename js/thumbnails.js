@@ -8,37 +8,29 @@ const pictures = getMockedPhotos();
 
 const pictureListFragment = document.createDocumentFragment();
 
-const onPictureClick = (evt) => {
-  evt.preventDefault();
-  const link = evt.currentTarget;
-  const id = link.dataset.id;
-  const foundPhoto = pictures.find((picture) => picture.id === id);
-
-  if(foundPhoto) {
-    return openBigPicture(foundPhoto);
-  }
-};
-
-const renderPicture = (({id, description, comments, likes, url}) => {
+const createPictureMarkUp = ({description, comments, likes, url}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   const imageElement = pictureElement.querySelector('.picture__img');
+
   imageElement.src = url;
   imageElement.alt = description;
-
-  pictureElement.dataset.id = id;
-  pictureElement.addEventListener('click', onPictureClick);
-
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureListFragment.appendChild(pictureElement);
 
+  return pictureElement;
+};
+
+const renderPicture = ((photo) => {
+  const pictureElement = createPictureMarkUp(photo);
   pictureElement.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openBigPicture();
+    openBigPicture(photo);
   });
+
+  pictureListFragment.appendChild(pictureElement);
 });
 
 pictures.forEach(renderPicture);
 pictureList.appendChild(pictureListFragment);
 
-export {onPictureClick};
+export {renderPicture};
