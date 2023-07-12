@@ -52,10 +52,15 @@ const onLoadMoreClick = (comments) => {
   }
 };
 
+
 const renderComments = (comments) => {
+  commentsList.innerHTML = '';
+
   onLoadMoreClick(comments);
 
-  commentsLoader.addEventListener('click', onLoadMoreClick);
+  commentsLoader.addEventListener('click', () => {
+    onLoadMoreClick(comments);
+  });
 };
 
 const clearComments = () => {
