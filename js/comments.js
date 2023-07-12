@@ -1,3 +1,5 @@
+/* import { renderPack } from './util'; */
+
 const COMMENTS_PACK_AMOUNT = 5;
 
 const commentsCount = document.querySelector('.social__comment-count');
@@ -30,7 +32,9 @@ const createComment = ({avatar, message, name}) => {
   return commentElement;
 };
 
-const onLoadMoreClick = (comments) => {
+let onLoadMoreClick = null;
+
+const createSliceRenderer = (comments) => {
   const startOfSlice = shownComments;
   const endOfSlice = shownComments + COMMENTS_PACK_AMOUNT;
 
@@ -52,19 +56,17 @@ const onLoadMoreClick = (comments) => {
   }
 };
 
-
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
+  const renderCommentSlice = createSliceRenderer(comments);
+  onLoadMoreClick = renderCommentSlice;
 
-  onLoadMoreClick(comments);
-
-  commentsLoader.addEventListener('click', () => {
-    onLoadMoreClick(comments);
-  });
+  commentsLoader.addEventListener('click', onLoadMoreClick);
 };
 
 const clearComments = () => {
   commentsList.innerHTML = '';
+  commentsLoader.removeEventListener('click', onLoadMoreClick);
 };
 
 export {renderComments, clearComments};
