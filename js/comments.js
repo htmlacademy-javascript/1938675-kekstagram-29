@@ -5,7 +5,6 @@ const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = commentsList.querySelector('.social__comment');
 
-let allCommentsRenderer = [];
 let shownComments = 0;
 
 const renderPack = (items, list, create) => {
@@ -16,7 +15,7 @@ const renderPack = (items, list, create) => {
     fragment.append(comment);
   });
 
-  commentsList.append(fragment);
+  list.append(fragment);
 };
 
 const createComment = ({avatar, message, name}) => {
@@ -35,32 +34,28 @@ const onLoadMoreClick = (comments) => {
   const startOfSlice = shownComments;
   const endOfSlice = shownComments + COMMENTS_PACK_AMOUNT;
 
-  //обрезает массив комментариев для показа до первых 5
+  /**обрезает массив комментариев до 5*/
   const commentsPack = comments.slice(startOfSlice, endOfSlice);
 
-  //добавляет во фрагмент элементы первого пака коммментов
+  /**отрисовывает пачку комментов*/
   renderPack(commentsPack, commentsList, createComment);
 
-  //обновляет данные для счетчика комментариев
-  commentsCount.textContent = `${commentsPack.length} из ${comments.length} комментариев`;
+  /**записывает кол-во отображаемых комментов в shownComments*/
+  shownComments += commentsPack.length;
 
-  //записывает кол-во комментов в первом паке в shownComments
-  shownComments = commentsPack.length;
+  /**обновляет данные для счетчика комментариев*/
+  commentsCount.textContent = `${shownComments} из ${comments.length} комментариев`;
 
-  //прописывает условие, при котором кноппку "Загрузить еще" показывать или нет
-  if(commentsPack.length >= comments.length) {
+  /**прописывает условие, при котором кноппку "Загрузить еще" показывать или нет*/
+  if(shownComments >= comments.length) {
     commentsLoader.classList.add('hidden');
   }
 };
 
-
 const renderComments = (comments) => {
   onLoadMoreClick(comments);
 
-  //добавляет слушатель на кнопку "Загрузить еще" и логику добавления нового пака комментов
-  commentsLoader.addEventListener('click', () => {
-    onLoadMoreClick(comments);
-  });
+  commentsLoader.addEventListener('click', onLoadMoreClick);
 };
 
 const clearComments = () => {

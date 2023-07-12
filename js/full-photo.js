@@ -15,8 +15,6 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openBigPicture = ({url, description, likes, comments}) => {
-  clearComments();
-
   pictureWrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
