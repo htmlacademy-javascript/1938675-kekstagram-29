@@ -49,9 +49,8 @@ const createSliceRenderer = (comments) => () => {
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
-  const renderCommentSlice = createSliceRenderer(comments);
-  renderCommentSlice();
-  onLoadMoreClick = renderCommentSlice;
+  onLoadMoreClick = createSliceRenderer(comments);
+  onLoadMoreClick();
 
   commentsLoader.addEventListener('click', onLoadMoreClick);
 };
