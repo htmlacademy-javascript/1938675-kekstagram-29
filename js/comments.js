@@ -1,4 +1,4 @@
-/* import { renderPack } from './util'; */
+import { renderPack } from './util.js';
 
 const COMMENTS_PACK_AMOUNT = 5;
 
@@ -8,17 +8,6 @@ const commentsList = document.querySelector('.social__comments');
 const commentTemplate = commentsList.querySelector('.social__comment');
 
 let shownComments = 0;
-
-const renderPack = (items, list, create) => {
-  const fragment = document.createDocumentFragment();
-
-  items.forEach((item) => {
-    const comment = create(item);
-    fragment.append(comment);
-  });
-
-  list.append(fragment);
-};
 
 const createComment = ({avatar, message, name}) => {
   const commentElement = commentTemplate.cloneNode(true);
