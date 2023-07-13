@@ -29,4 +29,16 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey};
+/** Функция для рендера пачки чего-либо */
+const renderPack = (items, list, create) => {
+  const fragment = document.createDocumentFragment();
+
+  items.forEach((item) => {
+    const element = create(item);
+    fragment.append(element);
+  });
+
+  list.append(fragment);
+};
+
+export {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey, renderPack};
