@@ -23,7 +23,7 @@ const createComment = ({avatar, message, name}) => {
 
 let onLoadMoreClick = null;
 
-const createSliceRenderer = (comments) => {
+const createSliceRenderer = (comments) => () => {
   const startOfSlice = shownComments;
   const endOfSlice = shownComments + COMMENTS_PACK_AMOUNT;
 
@@ -42,19 +42,22 @@ const createSliceRenderer = (comments) => {
   /**прописывает условие, при котором кноппку "Загрузить еще" показывать или нет*/
   if(shownComments >= comments.length) {
     commentsLoader.classList.add('hidden');
+  } else {
+    commentsLoader.classList.remove('hidden');
   }
 };
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
   const renderCommentSlice = createSliceRenderer(comments);
+  renderCommentSlice();
   onLoadMoreClick = renderCommentSlice;
 
   commentsLoader.addEventListener('click', onLoadMoreClick);
 };
 
 const clearComments = () => {
-  commentsList.innerHTML = '';
+  shownComments = 0;
   commentsLoader.removeEventListener('click', onLoadMoreClick);
 };
 

@@ -6,8 +6,6 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 const pictures = getMockedPhotos();
 
-const pictureListFragment = document.createDocumentFragment();
-
 const createPictureMarkUp = ({description, comments, likes, url}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   const imageElement = pictureElement.querySelector('.picture__img');
@@ -19,6 +17,8 @@ const createPictureMarkUp = ({description, comments, likes, url}) => {
 
   return pictureElement;
 };
+
+const pictureListFragment = document.createDocumentFragment();
 
 const renderPicture = ((photo) => {
   const pictureElement = createPictureMarkUp(photo);
