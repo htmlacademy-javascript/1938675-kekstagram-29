@@ -1,16 +1,26 @@
+import { isEscapeKey } from './util.js';
+
 const formContainer = document.querySelector('.img-upload__overlay');
 const imgUploadInput = document.querySelector('.img-upload__input');
 const imgPreview = document.querySelector('.img-upload__preview img');
 const effectPreviews = document.querySelectorAll('.effects__preview');
+const popupCloseElement = document.querySelector('.img-upload__cancel');
 
-/**открывает попап с формой после загрузки фото */
-imgUploadInput.addEventListener('change', (evt) => {
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeForm();
+  }
+};
+
+/**открывает попап с формой редактирования после загрузки фото */
+const onChangeimgUploadInput = (evt) => {
   formContainer.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   const currFiles = evt.target.files;
-  if(currFiles.length > 0){
-    const src = URL.createObjectURL(currFiles[0])
+  if(currFiles.length > 0) {
+    const src = URL.createObjectURL(currFiles[0]);
     imgPreview.src = src;
 
     const changePreviewImage = (element) => {
@@ -18,7 +28,27 @@ imgUploadInput.addEventListener('change', (evt) => {
     };
     effectPreviews.forEach(changePreviewImage);
   }
+  console.log(imgUploadInput.value);
+
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const openForm = () => {
+  imgUploadInput.addEventListener('change', onChangeimgUploadInput);
+};
+
+openForm();
+
+popupCloseElement.addEventListener('click', () => {
+  formContainer.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 });
 
-/**После выбора изображения пользователем с помощью стандартного контрола загрузки файла .img-upload__input, нужно подставить его в форму редактирования вместо тестового изображения в блок предварительного просмотра и в превью эффектов. */
+function closeForm() {
+  formContainer.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  imgUploadInput.value = '';
+}
+
+/**Закрытие формы редактирования изображения производится либо нажатием на кнопку .img-upload__cancel, либо нажатием клавиши Esc. Элементу .img-upload__overlay возвращается класс hidden. У элемента body удаляется класс modal-open. */
 
