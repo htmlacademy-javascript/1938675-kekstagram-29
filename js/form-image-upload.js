@@ -7,6 +7,8 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const effectPreviews = document.querySelectorAll('.effects__preview');
 const popupCloseElement = document.querySelector('.img-upload__cancel');
 
+const hashtag = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
