@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 
+const imgUploadForm = document.querySelector('.img-upload__form');
 const formContainer = document.querySelector('.img-upload__overlay');
 const imgUploadInput = document.querySelector('.img-upload__input');
 const imgPreview = document.querySelector('.img-upload__preview img');
@@ -28,7 +29,6 @@ const onChangeimgUploadInput = (evt) => {
     };
     effectPreviews.forEach(changePreviewImage);
   }
-  console.log(imgUploadInput.value);
 
   document.addEventListener('keydown', onDocumentKeydown);
 };
@@ -50,5 +50,18 @@ function closeForm() {
   imgUploadInput.value = '';
 }
 
-/**Закрытие формы редактирования изображения производится либо нажатием на кнопку .img-upload__cancel, либо нажатием клавиши Esc. Элементу .img-upload__overlay возвращается класс hidden. У элемента body удаляется класс modal-open. */
+const pristine = new Pristine(imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+});
 
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    console.log('Можно отправлять');
+  } else {
+    console.log('Форма невалидна');
+  }
+});

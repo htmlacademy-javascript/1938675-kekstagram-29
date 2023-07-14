@@ -1,4 +1,2 @@
-import {renderPicture} from './thumbnails.js';
+import './thumbnails.js';
 import './form-image-upload.js';
-
-renderPicture();
