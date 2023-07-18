@@ -6,8 +6,9 @@ const imgUploadInput = document.querySelector('.img-upload__input');
 const imgPreview = document.querySelector('.img-upload__preview img');
 const effectPreviews = document.querySelectorAll('.effects__preview');
 const popupCloseElement = document.querySelector('.img-upload__cancel');
+const hashtagField = document.querySelector('.text__hashtags');
 
-const hashtag = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
+const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -56,6 +57,39 @@ const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
 });
+
+let hashtagsError = '';
+
+const validateHashtags = (value) => {
+  const hashtags = value.trim().split(' ');
+
+  // Проверка на количество хэштегов
+  if (hashtags.length > 5) {
+    hashtagsError = 'Превышено количество хэш-тегов';
+    return false;
+  }
+
+  // Проверка каждого хэштега по регулярному выражению
+  for (let i = 0; i < hashtags.length; i++) {
+    if (!hashtagRegex.test(hashtags[i])) {
+      hashtagsError = 'Введен невалидный хэш-тег';
+      return false;
+    }
+  }
+
+  // Проверка на уникальность хэштегов
+  const uniqueHashtags = Array.from(new Set(hashtags));
+  if (uniqueHashtags.length !== hashtags.length) {
+    hashtagsError = 'Хэш-теги повторяются';
+    return false;
+  }
+
+  return true;
+};
+
+pristine.addValidator(hashtagField, validateHashtags, () => hashtagsError);
+/** Хэш-теги:
+если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения. */
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
