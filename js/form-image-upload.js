@@ -53,6 +53,7 @@ function closeForm() {
   document.body.classList.remove('modal-open');
   imgUploadInput.value = '';
   hashtagField.value = '';
+  commentField.value = '';
 }
 
 const pristine = new Pristine(imgUploadForm, {
@@ -96,8 +97,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    console.log('Можно отправлять');
-  } else {
-    console.log('Форма невалидна');
+    // Выполнять отправку формы
+    imgUploadForm.submit();
   }
 });
