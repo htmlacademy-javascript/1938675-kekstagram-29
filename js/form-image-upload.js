@@ -7,11 +7,12 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const effectPreviews = document.querySelectorAll('.effects__preview');
 const popupCloseElement = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
+const commentField = document.querySelector('.text__description');
 
 const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !hashtagField.contains(document.activeElement) && !commentField.contains(document.activeElement)) {
     evt.preventDefault();
     closeForm();
   }
@@ -51,6 +52,7 @@ function closeForm() {
   formContainer.classList.add('hidden');
   document.body.classList.remove('modal-open');
   imgUploadInput.value = '';
+  hashtagField.value = '';
 }
 
 const pristine = new Pristine(imgUploadForm, {
@@ -88,8 +90,6 @@ const validateHashtags = (value) => {
 };
 
 pristine.addValidator(hashtagField, validateHashtags, () => hashtagsError);
-/** Хэш-теги:
-если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения. */
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
