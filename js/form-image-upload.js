@@ -14,7 +14,7 @@ const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !hashtagField.contains(document.activeElement) && !commentField.contains(document.activeElement)) {
     evt.preventDefault();
-    closeForm();
+    imgUploadForm.reset();
   }
 };
 
