@@ -48,13 +48,10 @@ popupCloseElement.addEventListener('click', () => {
   document.body.classList.remove('modal-open');
 });
 
-function closeForm() {
+imgUploadForm.addEventListener('reset', () => {
   formContainer.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  imgUploadInput.value = '';
-  hashtagField.value = '';
-  commentField.value = '';
-}
+});
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
