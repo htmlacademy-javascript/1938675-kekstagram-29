@@ -9,26 +9,30 @@ const Default = {
 const scaleButtonSmaller = document.querySelector('.scale__control--smaller');//кнопка уменьшить масштаб
 const scaleButtonBigger = document.querySelector('.scale__control--bigger');//кнопка увеличить масштаб
 
+const getScale = () => parseInt(form.scale.value, 10);
+const setScale = (value) => {
+  imgPreview.style.transform = `scale(${value / 100})`;
+  form.scale.value = `${value}%`;
+};
+
 scaleButtonSmaller.addEventListener('click', () => {
-  const scaleCurrent = parseInt(form.scale.value, 10);
+  const scaleCurrent = getScale();
 
   if(scaleCurrent <= Default.MIN) {
     return;
   }
 
-  const newScale = scaleCurrent - Default.STEP;
-  imgPreview.style.transform = `scale(${newScale / 100})`;
-  form.scale.value = `${newScale}%`;
+  setScale(scaleCurrent - Default.STEP);
 });
 
 scaleButtonBigger.addEventListener('click', () => {
-  const scaleCurrent = parseInt(form.scale.value, 10);
+  const scaleCurrent = getScale();
 
   if(scaleCurrent >= Default.MAX) {
     return;
   }
 
-  const newScale = scaleCurrent + Default.STEP;
-  imgPreview.style.transform = `scale(${newScale / 100})`;
-  form.scale.value = `${newScale}%`;
+  setScale(scaleCurrent + Default.STEP);
 });
+
+export const resetScale = () => imgPreview.style.removePropetry('transform');
