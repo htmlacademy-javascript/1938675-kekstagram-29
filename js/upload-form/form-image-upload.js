@@ -1,5 +1,8 @@
 import { form, wrapper, imgPreview, effectPreviews } from './form-elements.js';
 import { isEscapeKey } from '../util.js';
+import { resetEffects } from './effects.js';
+import { resetScale } from './scale.js';
+
 
 const closeForm = () => form.reset();
 
@@ -32,11 +35,12 @@ const onChangeimgUploadInput = (evt) => {
 form.filename.addEventListener('change', onChangeimgUploadInput);
 
 form.cancelButton.addEventListener('click', () => {
-  wrapper.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  closeForm();
 });
 
 form.addEventListener('reset', () => {
   wrapper.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetEffects();
+  resetScale();
 });
