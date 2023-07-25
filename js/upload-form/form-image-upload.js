@@ -34,10 +34,6 @@ const onChangeimgUploadInput = (evt) => {
 
 form.filename.addEventListener('change', onChangeimgUploadInput);
 
-form.cancelButton.addEventListener('click', () => {
-  closeForm();
-});
-
 form.addEventListener('reset', () => {
   wrapper.classList.add('hidden');
   document.body.classList.remove('modal-open');

@@ -19,16 +19,23 @@ const validateHashtags = (value) => {
   }
 
   // Проверка каждого хэштега по регулярному выражению
-  for (let i = 0; i < hashtags.length; i++) {
+  /* for (let i = 0; i < hashtags.length; i++) {
     if (!hashtagRegex.test(hashtags[i])) {
       hashtagsError = 'Введен невалидный хэш-тег';
       return false;
     }
-  }
+  } */
+
+  hashtags.every((hashtag) => {
+    if (!hashtagRegex.test(hashtag)) {
+      hashtagsError = 'Введен невалидный хэш-тег';
+      return false;
+    }
+  });
 
   // Проверка на уникальность хэштегов
-  const uniqueHashtags = Array.from(new Set(hashtags));
-  if (uniqueHashtags.length !== hashtags.length) {
+  const uniqueHashtags = new Set(hashtags);
+  if (uniqueHashtags.size !== hashtags.length) {
     hashtagsError = 'Хэш-теги повторяются';
     return false;
   }
