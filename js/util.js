@@ -41,4 +41,29 @@ const renderPack = (items, list, create) => {
   list.append(fragment);
 };
 
-export {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey, renderPack};
+/** устраняет дребезг */
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+/** для пропуска кадров */
+function throttle (callback, delayBetweenFrames) {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+}
+
+export {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey, renderPack, debounce, throttle};
