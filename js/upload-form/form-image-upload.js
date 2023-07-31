@@ -4,7 +4,6 @@ import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
 import { pristine } from './validation.js';
 
-
 const closeForm = () => form.reset();
 
 const onDocumentKeydown = (evt) => {
