@@ -36,4 +36,4 @@ function closeBigPicture() {
   clearComments();
 }
 
-export {openBigPicture};
+export { openBigPicture };

@@ -35,4 +35,4 @@ scaleButtonBigger.addEventListener('click', () => {
   setScale(scaleCurrent + Default.STEP);
 });
 
-export const resetScale = () => imgPreview.style.removePropetry('transform');
+export const resetScale = () => imgPreview.style.removeProperty('transform');
