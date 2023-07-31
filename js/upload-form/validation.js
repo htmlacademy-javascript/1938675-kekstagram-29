@@ -1,4 +1,5 @@
 import { form } from './form-elements.js';
+import { showErrorMessage, showSuccessMessage } from './success-error-messages.js';
 
 const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
 
@@ -51,7 +52,12 @@ const setUserFormSubmit = (onSuccess) => {
           method: 'POST',
           body: formData,
         },
-      ).then(onSuccess);
+      ).then(() => {
+        onSuccess();
+        showSuccessMessage();
+      }).catch(() => {
+        showErrorMessage();
+      });
     }
   });
 };
