@@ -2,6 +2,7 @@ import { form, wrapper, imgPreview, effectPreviews } from './form-elements.js';
 import { isEscapeKey } from '../util.js';
 import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
+import { pristine } from './validation.js';
 
 
 const closeForm = () => form.reset();
@@ -39,4 +40,7 @@ form.addEventListener('reset', () => {
   document.body.classList.remove('modal-open');
   resetEffects();
   resetScale();
+  pristine.reset();
 });
+
+export { closeForm };
