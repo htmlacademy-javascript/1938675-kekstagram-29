@@ -14,7 +14,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-/**открывает попап с формой редактирования после загрузки фото */
 const onChangeimgUploadInput = (evt) => {
   wrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');

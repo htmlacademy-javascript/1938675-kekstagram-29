@@ -20,7 +20,7 @@ const openBigPicture = ({url, description, likes, comments}) => {
 
   pictureImgElement.src = url;
   likesCountElement.textContent = likes;
-  pictureDescriptionElement.alt = description;
+  pictureDescriptionElement.textContent = description;
 
   renderComments(comments);
 

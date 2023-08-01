@@ -13,6 +13,7 @@ const errorInner = errorWindow.querySelector('.error__inner');
 const onDocumentKeydownError = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+    evt.stopPropagation();
     closeErrorMessageWindow();
   }
 };
@@ -27,20 +28,21 @@ const onClickOverlayError = (evt) => {
 function closeErrorMessageWindow() {
   errorWindow.remove();
   errorBtn.removeEventListener('click', closeErrorMessageWindow);
-  document.removeEventListener('keydown', onDocumentKeydownError);
+  document.removeEventListener('keydown', onDocumentKeydownError, true);
   document.removeEventListener('click', onClickOverlayError);
 }
 
 const showErrorMessage = () => {
   document.body.append(errorWindow);
   errorBtn.addEventListener('click', closeErrorMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownError);
+  document.addEventListener('keydown', onDocumentKeydownError, true);
   document.addEventListener('click', onClickOverlayError);
 };
 
 const onDocumentKeydownSuccess = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+    evt.stopPropagation();
     closeSuccessMessageWindow();
   }
 };
@@ -55,14 +57,14 @@ const onClickOverlaySuccess = (evt) => {
 function closeSuccessMessageWindow() {
   successWindow.remove();
   successBtn.removeEventListener('click', closeSuccessMessageWindow);
-  document.removeEventListener('keydown', onDocumentKeydownSuccess);
+  document.removeEventListener('keydown', onDocumentKeydownSuccess, true);
   document.removeEventListener('click', onClickOverlaySuccess);
 }
 
 const showSuccessMessage = () => {
   document.body.append(successWindow);
   successBtn.addEventListener('click', closeSuccessMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownSuccess);
+  document.addEventListener('keydown', onDocumentKeydownSuccess, true);
   document.addEventListener('click', onClickOverlaySuccess);
 };
 
