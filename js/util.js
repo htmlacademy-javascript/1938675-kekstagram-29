@@ -1,32 +1,3 @@
-/** Функция для получения рандомного целого цисла из диапазона */
-function getRandomInteger (min, max) {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-}
-
-/** Функция получения рандомного объекта из массива */
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-/** Функция для генерации рандомного неповторяющегося целого цисла */
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    previousValues.includes(currentValue);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 /** Функция для рендера пачки чего-либо */
@@ -41,6 +12,8 @@ const renderPack = (items, list, create) => {
   list.append(fragment);
 };
 
+const sortRandom = () => Math.random() - 0.5;
+
 /** устраняет дребезг */
 function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
@@ -50,18 +23,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-/** для пропуска кадров */
-function throttle (callback, delayBetweenFrames) {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {getRandomInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey, renderPack, debounce, throttle};
+export { isEscapeKey, renderPack, sortRandom, debounce};
