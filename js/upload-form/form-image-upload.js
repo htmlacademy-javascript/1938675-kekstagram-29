@@ -5,6 +5,7 @@ import { resetScale } from './scale.js';
 import { pristine } from './validation.js';
 
 const closeForm = () => form.reset();
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !form.hashtags.contains(document.activeElement) && !form.description.contains(document.activeElement)) {
@@ -18,10 +19,15 @@ const onChangeimgUploadInput = (evt) => {
   wrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  const currFiles = evt.target.files;
-  if(currFiles.length > 0) {
-    const src = URL.createObjectURL(currFiles[0]);
-    imgPreview.src = src;
+  const file = evt.target.files;
+  if(file.length > 0) {
+    const currFile = file[0];
+    const fileName = currFile.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const src = URL.createObjectURL(currFile);
+    if (matches) {
+      imgPreview.src = src;
+    }
 
     const changePreviewImage = (element) => {
       element.style.backgroundImage = `url('${src}')`;
