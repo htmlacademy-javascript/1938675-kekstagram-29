@@ -1,7 +1,13 @@
-import { form } from './form-elements.js';
+import { form, submitButton } from './form-elements.js';
 import { showErrorMessage, showSuccessMessage } from './success-error-messages.js';
+import { sendData } from '../api.js';
 
 const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 export const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -38,26 +44,32 @@ const validateHashtags = (value) => {
 
 pristine.addValidator(form.hashtags, validateHashtags, () => hashtagsError);
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(evt.target);
-
-      fetch(
-        'https://29.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then(() => {
-        onSuccess();
-        showSuccessMessage();
-      }).catch(() => {
-        showErrorMessage();
-      });
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };
