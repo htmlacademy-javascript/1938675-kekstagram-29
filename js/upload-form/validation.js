@@ -2,7 +2,7 @@ import { form, submitButton } from './form-elements.js';
 import { showErrorMessage, showSuccessMessage } from './success-error-messages.js';
 import { sendData } from '../api.js';
 
-const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
+const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{1,19}$/i;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
