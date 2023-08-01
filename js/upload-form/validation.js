@@ -22,7 +22,7 @@ const validateHashtags = (value) => {
     return true;
   }
 
-  const hashtags = value.trim().toLowerCase().split(' ');
+  const hashtags = value.trim().toLowerCase().split(' ').filter((tag) => Boolean(tag.length));
 
   if (hashtags.length > 5) {
     hashtagsError = 'Превышено количество хэш-тегов';
