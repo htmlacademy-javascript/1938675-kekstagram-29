@@ -30,20 +30,15 @@ const createSliceRenderer = (comments) => () => {
   const startOfSlice = shownComments;
   const endOfSlice = shownComments + COMMENTS_PACK_AMOUNT;
 
-  /**обрезает массив комментариев до 5*/
   const commentsPack = comments.slice(startOfSlice, endOfSlice);
 
-  /**отрисовывает пачку комментов*/
   renderPack(commentsPack, commentsList, createComment);
 
-  /**записывает кол-во отображаемых комментов в shownComments*/
   shownComments += commentsPack.length;
 
-  /**обновляет данные для счетчика комментариев*/
   commentsRendered.textContent = shownComments;
   allComments.textContent = comments.length;
 
-  /**прописывает условие, при котором кноппку "Загрузить еще" показывать или нет*/
   if(shownComments >= comments.length) {
     commentsLoader.classList.add('hidden');
   } else {

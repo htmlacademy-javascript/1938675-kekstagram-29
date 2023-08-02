@@ -14,9 +14,10 @@ const renderPack = (items, list, create) => {
   list.append(fragment);
 };
 
+/** Получет рандомное число от -0.5 до 0.5 для сортировки массива */
 const sortRandom = () => Math.random() - 0.5;
 
-/** устраняет дребезг */
+/** Устраняет дребезг */
 function debounce (callback, timeoutDelay) {
   let timeoutId;
   return (...rest) => {
@@ -25,6 +26,7 @@ function debounce (callback, timeoutDelay) {
   };
 }
 
+/** Показывает сообщение об ошибке загрузки данных */
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
