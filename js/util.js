@@ -17,7 +17,7 @@ const renderPack = (items, list, create) => {
 const sortRandom = () => Math.random() - 0.5;
 
 /** устраняет дребезг */
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay) {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);

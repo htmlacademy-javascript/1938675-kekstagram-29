@@ -23,4 +23,6 @@ const createPictureMarkUp = (picture) => {
 
 const renderPhotos = (photos) => renderPack(photos, pictureList, createPictureMarkUp);
 
-export { pictureList, createPictureMarkUp, renderPhotos };
+const clearPhotos = () => pictureList.querySelectorAll('.picture').forEach((photo) => photo.remove());
+
+export { pictureList, createPictureMarkUp, renderPhotos, clearPhotos };
