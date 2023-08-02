@@ -6,8 +6,8 @@ const Default = {
   STEP: 25
 };
 
-const scaleButtonSmaller = document.querySelector('.scale__control--smaller');//кнопка уменьшить масштаб
-const scaleButtonBigger = document.querySelector('.scale__control--bigger');//кнопка увеличить масштаб
+const scaleButtonSmaller = document.querySelector('.scale__control--smaller');
+const scaleButtonBigger = document.querySelector('.scale__control--bigger');
 
 const getScale = () => parseInt(form.scale.value, 10);
 const setScale = (value) => {

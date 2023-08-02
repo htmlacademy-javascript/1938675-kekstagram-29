@@ -9,7 +9,6 @@ const commentTemplate = commentsList.querySelector('.social__comment');
 const commentsRendered = commentsCount.querySelector('.comments-rendered');
 const allComments = commentsCount.querySelector('.comments-count');
 
-
 let shownComments = 0;
 
 const createComment = ({avatar, message, name}) => {

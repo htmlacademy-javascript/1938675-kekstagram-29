@@ -2,7 +2,7 @@ import { form, wrapper, imgPreview, effectPreviews } from './form-elements.js';
 import { isEscapeKey } from '../util.js';
 import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
-import { pristine } from './validation.js';
+import { resetValidation } from './validation.js';
 
 const closeForm = () => form.reset();
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -14,7 +14,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const onChangeimgUploadInput = (evt) => {
+const onChangeImgUploadInput = (evt) => {
   wrapper.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -37,14 +37,14 @@ const onChangeimgUploadInput = (evt) => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-form.filename.addEventListener('change', onChangeimgUploadInput);
+form.filename.addEventListener('change', onChangeImgUploadInput);
 
 form.addEventListener('reset', () => {
   wrapper.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetEffects();
   resetScale();
-  pristine.reset();
+  resetValidation();
 });
 
 export { closeForm };

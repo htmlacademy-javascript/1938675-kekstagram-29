@@ -18,13 +18,13 @@ const renderPack = (items, list, create) => {
 const sortRandom = () => Math.random() - 0.5;
 
 /** Устраняет дребезг */
-function debounce (callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 /** Показывает сообщение об ошибке загрузки данных */
 const showAlert = (message) => {
@@ -48,4 +48,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { isEscapeKey, renderPack, sortRandom, debounce, showAlert};
+export { isEscapeKey, renderPack, sortRandom, debounce, showAlert };

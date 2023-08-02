@@ -9,7 +9,7 @@ const SubmitButtonText = {
   SENDING: 'Публикую...'
 };
 
-export const pristine = new Pristine(form, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
 });
@@ -78,4 +78,6 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {setUserFormSubmit};
+const resetValidation = () => pristine.reset();
+
+export { setUserFormSubmit, resetValidation };
