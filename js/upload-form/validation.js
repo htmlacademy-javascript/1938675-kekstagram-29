@@ -1,7 +1,13 @@
-import { form } from './form-elements.js';
+import { form, submitButton } from './form-elements.js';
 import { showErrorMessage, showSuccessMessage } from './success-error-messages.js';
+import { sendData } from '../api.js';
 
-const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{2,19}$/i;
+const hashtagRegex = /^#(?![\s])[a-z0-9а-яё]{1,19}$/i;
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 export const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -11,15 +17,18 @@ export const pristine = new Pristine(form, {
 let hashtagsError = '';
 
 const validateHashtags = (value) => {
-  const hashtags = value.trim().toLocaleLowerCase().split(' ');
+  if (value.trim() === '') {
+    hashtagsError = '';
+    return true;
+  }
 
-  // Проверка на количество хэштегов
+  const hashtags = value.trim().toLowerCase().split(' ').filter(Boolean);
+
   if (hashtags.length > 5) {
     hashtagsError = 'Превышено количество хэш-тегов';
     return false;
   }
 
-  // Проверка на уникальность хэштегов
   const uniqueHashtags = new Set(hashtags);
   if (uniqueHashtags.size !== hashtags.length) {
     hashtagsError = 'Хэш-теги повторяются';
@@ -38,26 +47,33 @@ const validateHashtags = (value) => {
 
 pristine.addValidator(form.hashtags, validateHashtags, () => hashtagsError);
 
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(evt.target);
-
-      fetch(
-        'https://29.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then(() => {
-        onSuccess();
-        showSuccessMessage();
-      }).catch(() => {
-        showErrorMessage();
-      });
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };

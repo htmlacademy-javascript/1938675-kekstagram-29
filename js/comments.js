@@ -6,6 +6,9 @@ const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = commentsList.querySelector('.social__comment');
+const commentsRendered = commentsCount.querySelector('.comments-rendered');
+const allComments = commentsCount.querySelector('.comments-count');
+
 
 let shownComments = 0;
 
@@ -27,19 +30,15 @@ const createSliceRenderer = (comments) => () => {
   const startOfSlice = shownComments;
   const endOfSlice = shownComments + COMMENTS_PACK_AMOUNT;
 
-  /**обрезает массив комментариев до 5*/
   const commentsPack = comments.slice(startOfSlice, endOfSlice);
 
-  /**отрисовывает пачку комментов*/
   renderPack(commentsPack, commentsList, createComment);
 
-  /**записывает кол-во отображаемых комментов в shownComments*/
   shownComments += commentsPack.length;
 
-  /**обновляет данные для счетчика комментариев*/
-  commentsCount.textContent = `${shownComments} из ${comments.length} комментариев`;
+  commentsRendered.textContent = shownComments;
+  allComments.textContent = comments.length;
 
-  /**прописывает условие, при котором кноппку "Загрузить еще" показывать или нет*/
   if(shownComments >= comments.length) {
     commentsLoader.classList.add('hidden');
   } else {

@@ -1,14 +1,15 @@
 import './upload-form/scale.js';
 import './upload-form/effects.js';
-import { renderPack } from './util.js';
-import { pictureList, createPictureMarkUp } from './thumbnails.js';
 import { setUserFormSubmit } from './upload-form/validation.js';
 import { closeForm } from './upload-form/form-image-upload.js';
+import { setFilters } from './upload-form/filters.js';
+import { showAlert } from './util.js';
+import { getData } from './api.js';
 
-fetch('https://29.javascript.pages.academy/kekstagram/data')
-  .then((response) => response.json())
+getData()
   .then((photos) => {
-    renderPack(photos, pictureList, createPictureMarkUp);
-  });
+    setFilters(photos);
+  })
+  .catch(() => showAlert('Ошибка получения данных с сервера'));
 
 setUserFormSubmit(closeForm);

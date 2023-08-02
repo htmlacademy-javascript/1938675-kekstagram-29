@@ -1,4 +1,5 @@
 import { openBigPicture } from './full-photo.js';
+import { renderPack } from './util.js';
 
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -20,4 +21,8 @@ const createPictureMarkUp = (picture) => {
   return pictureElement;
 };
 
-export { pictureList, createPictureMarkUp };
+const renderPhotos = (photos) => renderPack(photos, pictureList, createPictureMarkUp);
+
+const clearPhotos = () => pictureList.querySelectorAll('.picture').forEach((photo) => photo.remove());
+
+export { pictureList, createPictureMarkUp, renderPhotos, clearPhotos };

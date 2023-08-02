@@ -10,52 +10,45 @@ const errorWindow = errorTemplate.cloneNode(true);
 const errorBtn = errorWindow.querySelector('.error__button');
 const errorInner = errorWindow.querySelector('.error__inner');
 
-const removeErrorMessageWindow = () => {
-  errorWindow.remove();
-};
+let messageWindow = null;
 
-const onDocumentKeydownError = (evt) => {
+const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    removeErrorMessageWindow();
+    evt.stopPropagation();
+    closeMessageWindow();
   }
 };
 
-const onClickOverlayError = (evt) => {
-  if (evt.target !== errorInner) {
-    removeErrorMessageWindow();
+const onClickOverlay = (innerElement, evt) => {
+  if (!messageWindow || evt.target === innerElement || innerElement.contains(evt.target)) {
+    return;
   }
+  closeMessageWindow();
 };
 
-const showErrorMessage = () => {
-  document.body.append(errorWindow);
-  errorBtn.addEventListener('click', removeErrorMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownError);
-  document.addEventListener('click', onClickOverlayError);
-};
-
-const removeSuccessMessageWindow = () => {
-  successWindow.remove();
-};
-
-const onDocumentKeydownSuccess = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    removeSuccessMessageWindow();
+function closeMessageWindow() {
+  if (!messageWindow) {
+    return;
   }
-};
+  messageWindow.remove();
+  document.removeEventListener('keydown', onDocumentKeydown, true);
+  document.removeEventListener('click', onClickOverlay);
+  messageWindow = null;
+}
 
-const onClickOverlaySuccess = (evt) => {
-  if (evt.target !== successInner) {
-    removeSuccessMessageWindow();
+const showMessage = (windowElement, btn, innerElement) => {
+  if (messageWindow) {
+    closeMessageWindow();
   }
+  document.body.append(windowElement);
+  btn.addEventListener('click', closeMessageWindow);
+  document.addEventListener('keydown', onDocumentKeydown, true);
+  document.addEventListener('click', (evt) => onClickOverlay(innerElement, evt));
+  messageWindow = windowElement;
 };
 
-const showSuccessMessage = () => {
-  document.body.append(successWindow);
-  successBtn.addEventListener('click', removeSuccessMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownSuccess);
-  document.addEventListener('click', onClickOverlaySuccess);
-};
+const showSuccessMessage = () => showMessage(successWindow, successBtn, successInner);
+const showErrorMessage = () => showMessage(errorWindow, errorBtn, errorInner);
 
 export { showErrorMessage, showSuccessMessage };
