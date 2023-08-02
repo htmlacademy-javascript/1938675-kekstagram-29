@@ -37,12 +37,14 @@ function closeMessageWindow() {
   messageWindow = null;
 }
 
+const onButtonClick = () => closeMessageWindow();
+
 const showMessage = (windowElement, btn, innerElement) => {
   if (messageWindow) {
     closeMessageWindow();
   }
   document.body.append(windowElement);
-  btn.addEventListener('click', closeMessageWindow);
+  btn.addEventListener('click', onButtonClick);
   document.addEventListener('keydown', onDocumentKeydown, true);
   document.addEventListener('click', (evt) => onClickOverlay(innerElement, evt));
   messageWindow = windowElement;

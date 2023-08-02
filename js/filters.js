@@ -1,5 +1,5 @@
-import { renderPhotos, clearPhotos } from '../thumbnails.js';
-import { sortRandom, debounce } from '../util.js';
+import { renderPhotos, clearPhotos } from './thumbnails.js';
+import { sortRandom, debounce } from './util.js';
 
 const TIMEOUT = 500;
 const PICTURES_COUNT = 10;
@@ -29,7 +29,7 @@ const sortPhotos = () => {
   return photos;
 };
 
-const debaunceThumbnailsRender = debounce(() => {
+const debouncedThumbnailsRender = debounce(() => {
   clearPhotos();
   renderPhotos(sortPhotos());
 }, TIMEOUT);
@@ -45,7 +45,7 @@ filtersWrapper.addEventListener('click', (evt) => {
   target.classList.add(ACTIVE_BUTTON_CLASS);
   activeBtn = target;
 
-  debaunceThumbnailsRender();
+  debouncedThumbnailsRender();
 });
 
 const setFilters = (receivedPhotos) => {

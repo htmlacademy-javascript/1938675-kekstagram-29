@@ -149,4 +149,4 @@ hideSlider();
 effectsContainer.addEventListener('change', onEffectsChange);
 effectSlider.noUiSlider.on('update', onSliderUpdate);
 
-export {resetEffects};
+export { resetEffects };
