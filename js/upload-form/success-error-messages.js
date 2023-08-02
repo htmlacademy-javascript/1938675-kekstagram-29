@@ -10,62 +10,45 @@ const errorWindow = errorTemplate.cloneNode(true);
 const errorBtn = errorWindow.querySelector('.error__button');
 const errorInner = errorWindow.querySelector('.error__inner');
 
-const onDocumentKeydownError = (evt) => {
+let messageWindow = null;
+
+const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     evt.stopPropagation();
-    closeErrorMessageWindow();
+    closeMessageWindow();
   }
 };
 
-const onClickOverlayError = (evt) => {
-  if (evt.target === errorInner || errorInner.contains(evt.target)) {
+const onClickOverlay = (innerElement, evt) => {
+  if (!messageWindow || evt.target === innerElement || innerElement.contains(evt.target)) {
     return;
   }
-  closeErrorMessageWindow();
+  closeMessageWindow();
 };
 
-function closeErrorMessageWindow() {
-  errorWindow.remove();
-  errorBtn.removeEventListener('click', closeErrorMessageWindow);
-  document.removeEventListener('keydown', onDocumentKeydownError, true);
-  document.removeEventListener('click', onClickOverlayError);
-}
-
-const showErrorMessage = () => {
-  document.body.append(errorWindow);
-  errorBtn.addEventListener('click', closeErrorMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownError, true);
-  document.addEventListener('click', onClickOverlayError);
-};
-
-const onDocumentKeydownSuccess = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    closeSuccessMessageWindow();
-  }
-};
-
-const onClickOverlaySuccess = (evt) => {
-  if (evt.target === successInner || successInner.contains(evt.target)) {
+function closeMessageWindow() {
+  if (!messageWindow) {
     return;
   }
-  closeSuccessMessageWindow();
-};
-
-function closeSuccessMessageWindow() {
-  successWindow.remove();
-  successBtn.removeEventListener('click', closeSuccessMessageWindow);
-  document.removeEventListener('keydown', onDocumentKeydownSuccess, true);
-  document.removeEventListener('click', onClickOverlaySuccess);
+  messageWindow.remove();
+  document.removeEventListener('keydown', onDocumentKeydown, true);
+  document.removeEventListener('click', onClickOverlay);
+  messageWindow = null;
 }
 
-const showSuccessMessage = () => {
-  document.body.append(successWindow);
-  successBtn.addEventListener('click', closeSuccessMessageWindow);
-  document.addEventListener('keydown', onDocumentKeydownSuccess, true);
-  document.addEventListener('click', onClickOverlaySuccess);
+const showMessage = (windowElement, btn, innerElement) => {
+  if (messageWindow) {
+    closeMessageWindow();
+  }
+  document.body.append(windowElement);
+  btn.addEventListener('click', closeMessageWindow);
+  document.addEventListener('keydown', onDocumentKeydown, true);
+  document.addEventListener('click', (evt) => onClickOverlay(innerElement, evt));
+  messageWindow = windowElement;
 };
+
+const showSuccessMessage = () => showMessage(successWindow, successBtn, successInner);
+const showErrorMessage = () => showMessage(errorWindow, errorBtn, errorInner);
 
 export { showErrorMessage, showSuccessMessage };
