@@ -3,45 +3,55 @@ import { sortRandom, debounce } from '../util.js';
 
 const TIMEOUT = 500;
 const PICTURES_COUNT = 10;
+const WRAPPER_CLASS = 'img-filters';
+const BUTTON_CLASS = `${WRAPPER_CLASS}__button`;
+const ACTIVE_BUTTON_CLASS = `${BUTTON_CLASS}--active`;
 
-const filters = document.querySelector('.img-filters');
-const filterForm = document.querySelector('.img-filters__form');
-const filterDefaultBtn = document.getElementById('filter-default');
-const filterRandomBtn = document.getElementById('filter-random');
-const filterDiscussedBtn = document.getElementById('filter-discussed');
+const filtersWrapper = document.querySelector(`.${WRAPPER_CLASS}`);
+const filterBtn = document.querySelectorAll(`.${BUTTON_CLASS}`);
 
-const compareFunction = (a, b) => b.comments.length - a.comments.length;
+const [defaultBtn, RandomBtn, DiscussedBtn] = filterBtn;
+let activeBtn = defaultBtn;
 
-const showFilters = () => filters.classList.remove('img-filters--inactive');
+const isButton = (target) => target.classList.contains(BUTTON_CLASS);
 
-const filterPhotos = (photos, filterBtn) => {
-  if(filterBtn === filterDefaultBtn) {
-    return photos;
-  } else if(filterBtn === filterRandomBtn) {
+let photos = [];
+
+const sortPhotos = () => {
+  if(activeBtn === RandomBtn) {
     return photos.slice().sort(sortRandom).slice(0, PICTURES_COUNT);
-  } else if(filterBtn === filterDiscussedBtn) {
-    return photos.slice().sort(compareFunction);
   }
+
+  if(activeBtn === DiscussedBtn) {
+    return photos.slice().sort((a, b) => b.comments.length - a.comments.length);
+  }
+
+  return photos;
 };
 
-const debaunceThumbnailsRender = (photos, filterBtn) => {
-  debounce(() => {
-    clearPhotos();
-    renderPhotos(filterPhotos(photos, filterBtn));
-  }, TIMEOUT);
+const debaunceThumbnailsRender = debounce(() => {
+  clearPhotos();
+  renderPhotos(sortPhotos());
+}, TIMEOUT);
+
+filtersWrapper.addEventListener('click', (evt) => {
+  const target = evt.target;
+
+  if(!isButton(target) || activeBtn === target) {
+    return;
+  }
+
+  activeBtn.classList.remove(ACTIVE_BUTTON_CLASS);
+  target.classList.add(ACTIVE_BUTTON_CLASS);
+  activeBtn = target;
+
+  debaunceThumbnailsRender();
+});
+
+const setFilters = (receivedPhotos) => {
+  photos = receivedPhotos;
+  filtersWrapper.classList.remove('img-filters--inactive');
+  renderPhotos(receivedPhotos);
 };
 
-const onFilterButtonClick = (event, photos) => {
-  const filterBtn = event.target;
-  const activeButton = document.querySelector('.img-filters__button--active');
-  activeButton.classList.remove('img-filters__button--active');
-  filterBtn.classList.add('img-filters__button--active');
-  debaunceThumbnailsRender(photos, filterBtn);
-};
-
-const setFilters = (photos) => {
-  filterForm.addEventListener('click', (event) => {
-    onFilterButtonClick(event, photos);
-  });
-};
-export { showFilters, setFilters };
+export { setFilters };
