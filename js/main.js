@@ -9,7 +9,6 @@ import { getData } from './api.js';
 
 getData()
   .then((photos) => {
-    renderPhotos(photos);
     setFilters(photos);
   })
   .catch(() => showAlert('Ошибка получения данных с сервера'));
